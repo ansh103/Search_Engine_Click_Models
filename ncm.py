@@ -38,29 +38,32 @@ R = random.Random(0)
 SERP_SIZE = 10
 # 1 << SERP_SIZE possible click patterns, and we have to record for each possible position
 # SERP_SIZE can't be too big. 10 gives 10240, but 20 gives 21M.
-CLICK_PATTERN_SIZE_1D = 1 << SERP_SIZE
-CLICK_PATTERN_SIZE_2D = SERP_SIZE * CLICK_PATTERN_SIZE_1D
+CLICK_PATTERN_SIZE_1D = 1 << SERP_SIZE #2^10=1024 click patterns
+CLICK_PATTERN_SIZE_2D = SERP_SIZE * CLICK_PATTERN_SIZE_1D #document can be found in SERP_SIZE positions i.e 10*1024=10240
 
+#queries
 Q_VEC_SIZE = CLICK_PATTERN_SIZE_1D
 Q_VEC_START = 0
 Q_VEC_END = Q_VEC_START + Q_VEC_SIZE
 
+#interactions
 I_VEC_SIZE = 1
 I_VEC_START = Q_VEC_END
 I_VEC_END = I_VEC_START + I_VEC_SIZE
 
+#documents
 D_VEC_SIZE = CLICK_PATTERN_SIZE_2D
 D_VEC_START = I_VEC_END
 D_VEC_END = D_VEC_START + D_VEC_SIZE
 
 VEC_SIZE = D_VEC_END
 
-
+#standard function to get rss
 def get_rss():
     process = psutil.Process(os.getpid())
     return process.memory_info().rss
 
-
+#function to generate elapsed time
 def elapsed_gen(title, report_every=1):
     took = []
 
@@ -100,10 +103,10 @@ def index_of_click_pattern(clicks):
 
 
 class SparseVectorBuilder(object):
-    def __init__self, shape, dtype=None):
+    def __init__(self, shape, dtype=None):
         self.shape = shape
         self.dtype = dtype
-        # TODO supprt n-dimensions
+        # TODO support n-dimensions
         self.stride = (shape[-1], 1)
         self.size = shape[0] * shape[1]
         self.indices = []
