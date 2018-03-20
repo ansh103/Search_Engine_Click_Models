@@ -1,14 +1,13 @@
 import numpy as np
 from numbers import Number
 
-
 class Ndsparse:
     """
     N-dimensional sparse matrix.
-    entries: dict of positions and values in matrix
-        key: N-tuple of positions (i,k,...)
-        val: value at position
-    d: dimension
+    entries in the form of dict of positions and values in matrix
+    key as N-tuple of positions (i,k,...)
+    val is value at position
+    d stands for dimension
     """
 
     def __init__(self, *args):
